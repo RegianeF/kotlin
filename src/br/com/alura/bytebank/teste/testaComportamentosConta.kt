@@ -1,5 +1,6 @@
 package br.com.alura.bytebank.teste
 
+import br.com.alura.bytebank.exception.FalhaAutenticacaoException
 import br.com.alura.bytebank.exception.SaldoInsuficienteException
 import br.com.alura.bytebank.modelo.Cliente
 import br.com.alura.bytebank.modelo.ContaCorrente
@@ -17,23 +18,23 @@ fun testaComportamentosConta() {
     val contaFran = ContaPoupanca(numero = 1001, titular = fran)
     contaFran.deposita(300.0)
 
-    println(contaFran.titular.nome)
-    println(contaFran.numero)
-    println(contaFran.saldo)
+    println("Titular: ${contaFran.titular.nome} | Número da Conta: ${contaFran.numero}")
+    println("Depósito: ${contaFran.saldo}")
 
-    println("Titular: ${contaAlex.titular.nome} Número da Conta: ${contaAlex.numero}")
-    println(contaAlex.saldo)
+    println("Titular: ${contaAlex.titular.nome} | Número da Conta: ${contaAlex.numero}")
+    println("Depósito: ${contaAlex.saldo}")
 
-    println("depositando na conta do Alex")
+    println()
+    println("Depositando na conta do Alex: ")
     contaAlex.deposita(500.0)
-    println(contaAlex.saldo)
+    println("Saldo ${contaAlex.saldo}")
 
-    println("depositando na conta da Fran")
-    contaFran.deposita(700.0)
-    println(contaFran.saldo)
+    println("Depositando na conta da Fran: ")
+    contaFran.deposita(500.0)
+    println("Saldo ${contaFran.saldo}")
 
     println("sacando na conta do Alex")
-    contaAlex.saca(250.0)
+    contaAlex.saca(300.0)
     println(contaAlex.saldo)
 
     println("sacando na conta da Fran")
@@ -51,7 +52,9 @@ fun testaComportamentosConta() {
     println("Transferência da conta da Fran para o Alex")
 
     try {
-        contaFran.transfere(destino = contaAlex, valor = 300.0)
+        contaFran.transfere(destino = contaAlex, valor = 100.0, senha = 9)
+        //lembrando que nesse caso se houver dinheiro, e senha não for correto
+        //ira apresentar uma mensagem falha na autenticação pq a senha é errada
         println("Transferência sucedida")
         //nesse caso ele esta tentando fazer uma transf para o destino com valor
         //se essa transf ocorre tudo bem - printa transferencia sucedida
@@ -62,8 +65,16 @@ fun testaComportamentosConta() {
         println("Falha na transferência")
         println("Saldo insuficiente")
         e.printStackTrace()
-
-    }
+    } catch (e: FalhaAutenticacaoException){
+        println("Falha na tranferência")
+        println("Falha na autenticação")
+        e.printStackTrace()
+    } catch (e : Exception){
+        //usar exception é uma forma de pegar todos os erros
+        println("Erro desconhecido")
+        e.printStackTrace()
+    } //sempre deixar esse catch de erro desconhecido por ultimo
+    //existe dois catch pq pode ter mais que uma verificação
 
     println(contaAlex.saldo)
     println(contaFran.saldo)

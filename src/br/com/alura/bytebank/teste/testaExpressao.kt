@@ -24,7 +24,7 @@ fun testaExpressao() {
     //criar uma taxa indicar que é um double, mas pode ser nulo...
     //se valor recebido for diferente de nulo então faça
     val valorComTaxa : Double? = if (valorRecebido != null){
-        valorRecebido + 0.1
+        valorRecebido + 0.0
     } else{
         null
         //se não devolva null
