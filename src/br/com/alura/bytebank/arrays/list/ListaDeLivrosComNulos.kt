@@ -8,10 +8,9 @@ fun main() {
 
     println()
 
-    //listasemnull
     listaDeLivros
-        .groupBy { it.editora} //group by espera um elemento que diz qual o elemente que será usado p agrupar a lista
-        .forEach { (editora, livros) ->   //é necessario colocar em () o que a função forEach esta recebendo
+        .groupBy { it.editora ?: "Editora Desconhecida"} //group by espera um elemento que diz qual o elemente que será usado p agrupar a lista
+       .forEach { (editora, livros: List<Livro>) ->   //é necessario colocar em () o que a função forEach esta recebendo
             println("$editora: ${livros.joinToString { it.titulo }}")
         }
 }

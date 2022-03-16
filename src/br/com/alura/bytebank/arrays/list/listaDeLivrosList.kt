@@ -50,6 +50,7 @@ fun main() {
     val ordenadoAnoPublicacao: List<Livro> = livros.sorted()  //traz a lista ordenada a partir de algum critério
     ordenadoAnoPublicacao.imprimeComMarcadores()
 
+    //sortedBy ordena a partir de algum critério pre estabelecido no caso é titulo
     val ordenadoTitulo = livros.sortedBy { it.titulo }
     ordenadoTitulo.imprimeComMarcadores()
 
